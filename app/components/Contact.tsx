@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -13,21 +14,21 @@ export default function Contact() {
 
     const form = event.currentTarget;
     const formData = new FormData(form);
+    const body = new URLSearchParams();
+
+    formData.forEach((value, key) => {
+      body.append(key, String(value));
+    });
 
     setSubmitting(true);
 
     try {
-      const response = await fetch("/", {
+      const response = await fetch("/__forms.html", {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
-        body: new URLSearchParams(
-          Array.from(formData.entries()).map(([key, value]) => [
-            key,
-            String(value),
-          ])
-        ).toString(),
+        body: body.toString(),
       });
 
       if (response.ok) {
@@ -51,7 +52,6 @@ export default function Contact() {
       className="bg-white px-6 py-24 text-black lg:px-12"
     >
       <div className="mx-auto max-w-7xl">
-        {/* Heading */}
         <div className="max-w-4xl">
           <p className="mb-4 text-sm font-medium uppercase tracking-[0.25em] text-black">
             Get in Touch
@@ -66,9 +66,7 @@ export default function Contact() {
           </h2>
         </div>
 
-        {/* Main content */}
         <div className="mt-20 grid gap-16 lg:grid-cols-2">
-          {/* Contact Form */}
           <div>
             <h3 className="mb-8 text-2xl font-semibold">
               Send us a message
@@ -90,13 +88,14 @@ export default function Contact() {
                 onSubmit={handleSubmit}
                 className="space-y-6"
                 method="POST"
-                data-netlify="true"
                 name="contact"
-                netlify-honeypot="bot-field"
               >
-                <input type="hidden" name="form-name" value="contact" />
+                <input
+                  type="hidden"
+                  name="form-name"
+                  value="contact"
+                />
 
-                {/* Honeypot spam protection */}
                 <div className="hidden" aria-hidden="true">
                   <label htmlFor="bot-field">
                     Leave this field empty
@@ -109,7 +108,6 @@ export default function Contact() {
                   />
                 </div>
 
-                {/* Name */}
                 <div>
                   <label
                     htmlFor="name"
@@ -117,7 +115,6 @@ export default function Contact() {
                   >
                     Your Name
                   </label>
-
                   <input
                     id="name"
                     name="name"
@@ -129,7 +126,6 @@ export default function Contact() {
                   />
                 </div>
 
-                {/* Email */}
                 <div>
                   <label
                     htmlFor="email"
@@ -137,7 +133,6 @@ export default function Contact() {
                   >
                     Email Address
                   </label>
-
                   <input
                     id="email"
                     name="email"
@@ -149,7 +144,6 @@ export default function Contact() {
                   />
                 </div>
 
-                {/* Company */}
                 <div>
                   <label
                     htmlFor="company"
@@ -157,7 +151,6 @@ export default function Contact() {
                   >
                     Company
                   </label>
-
                   <input
                     id="company"
                     name="company"
@@ -168,7 +161,6 @@ export default function Contact() {
                   />
                 </div>
 
-                {/* Message */}
                 <div>
                   <label
                     htmlFor="message"
@@ -176,7 +168,6 @@ export default function Contact() {
                   >
                     Your Message
                   </label>
-
                   <textarea
                     id="message"
                     name="message"
@@ -187,7 +178,6 @@ export default function Contact() {
                   />
                 </div>
 
-                {/* Submit */}
                 <button
                   type="submit"
                   disabled={submitting}
@@ -199,7 +189,6 @@ export default function Contact() {
             )}
           </div>
 
-          {/* Contact Information */}
           <div className="lg:pl-12">
             <p className="max-w-lg text-lg leading-8 text-black">
               Whether you are building a new brand, transforming an
@@ -208,12 +197,10 @@ export default function Contact() {
             </p>
 
             <div className="mt-12 space-y-10">
-              {/* Email */}
               <div>
                 <p className="mb-3 text-sm uppercase tracking-[0.2em] text-black">
                   Email
                 </p>
-
                 <a
                   href="mailto:hello@kajanjabrand.co.tz"
                   className="text-lg hover:text-gray-400"
@@ -222,12 +209,10 @@ export default function Contact() {
                 </a>
               </div>
 
-              {/* Phone */}
               <div>
                 <p className="mb-3 text-sm uppercase tracking-[0.2em] text-black">
                   Phone
                 </p>
-
                 <div className="space-y-2">
                   <a
                     href="tel:+255652736984"
@@ -235,7 +220,6 @@ export default function Contact() {
                   >
                     +255 652 736 984
                   </a>
-
                   <a
                     href="tel:+255769861841"
                     className="block hover:text-gray-400"
@@ -245,12 +229,10 @@ export default function Contact() {
                 </div>
               </div>
 
-              {/* Address */}
               <div>
                 <p className="mb-3 text-sm uppercase tracking-[0.2em] text-black">
                   Visit Us
                 </p>
-
                 <p className="leading-7 text-black">
                   No. 2 Old Bagamoyo Road /
                   <br />
@@ -259,8 +241,6 @@ export default function Contact() {
                   Dar es Salaam, Tanzania
                 </p>
               </div>
-
-              {/* Social links can be added here */}
             </div>
           </div>
         </div>
