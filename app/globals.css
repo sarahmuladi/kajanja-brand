@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+@theme{
+  --color-primary: #0135bb;
+  --color-secondary: #7fd0dd;
+  --color-accent: #ecc41b;
+
+  --background: #ffffff;
+  --foreground: #111111; 
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+}
+
+::selection {
+  background: var(--color-primary);
+  color: #ffffff;
+}
